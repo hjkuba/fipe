@@ -1,5 +1,5 @@
 export interface Marca {
-  codigo: number;
+  codigo: string;
   nome: string;
 }
 
@@ -9,7 +9,7 @@ export interface Modelo {
 }
 
 export interface Ano {
-  codigo: number;
+  codigo: string;
   nome: string;
 }
 

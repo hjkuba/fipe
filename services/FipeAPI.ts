@@ -27,9 +27,13 @@ export async function fetchYears(brand: Marca, model: Modelo) {
   return data;
 }
 
-export async function fetchVehicleInfo(brand: Marca, model: Modelo, year: Ano) {
+export async function fetchVehicleInfo(
+  brandCode: string,
+  modelCode: string,
+  yearCode: string,
+) {
   const { data } = await axios.get<Automovel>(
-    `${BASE_URL}/carros/marcas/${brand.codigo}/modelos/${model.codigo}/anos/${year.codigo}`,
+    `${BASE_URL}/carros/marcas/${brandCode}/modelos/${modelCode}/anos/${yearCode}`,
   );
   return data;
 }
