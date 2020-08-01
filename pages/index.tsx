@@ -1,28 +1,20 @@
 import React from 'react';
-import axios from 'axios';
-import { Marca } from '../types';
+import { END } from 'redux-saga';
+import HomeContent from '@/contents/HomeContent';
+import wrapper from '@/redux/store';
+import { brandFetchRequested } from '@/redux/actions';
+import type { SagaStore } from '@/redux/store';
 
-interface HomePageProps {
-  brands: Marca[];
+function HomePage() {
+  return <HomeContent />;
 }
 
-function HomePage({ brands }: HomePageProps) {
-  return (
-    <ul>
-      {brands.map((brand) => (
-        <li key={brand.codigo}>{brand.nome}</li>
-      ))}
-    </ul>
-  );
-}
-
-export async function getServerSideProps() {
-  const { data: brands } = await axios.get(
-    'https://parallelum.com.br/fipe/api/v1/carros/marcas',
-  );
-  return {
-    props: { brands },
-  };
-}
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({ store }) => {
+    store.dispatch(brandFetchRequested());
+    store.dispatch(END);
+    await (store as SagaStore).sagaTask?.toPromise();
+  },
+);
 
 export default HomePage;
