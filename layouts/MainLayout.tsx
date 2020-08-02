@@ -21,7 +21,7 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 500;
   margin: 0 0 0 16px;
   padding-left: 16px;

@@ -7,7 +7,7 @@ interface ModelResponse {
   anos: Ano[];
 }
 
-const BASE_URL = `${process.env.NEXT_PUBLIC_FIPE_API_URL}/api/v1/`;
+const BASE_URL = `${process.env.NEXT_PUBLIC_FIPE_API_URL}/api/v1`;
 
 export async function fetchBrands() {
   const { data } = await axios.get<Marca[]>(`${BASE_URL}/carros/marcas`);

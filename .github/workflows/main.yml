@@ -1,0 +1,47 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn install
+      - name: Lint code
+        run: yarn lint
+      - name: Check Types
+        run: yarn check-types
+
+  build-publish:
+    runs-on: ubuntu-latest
+    env:
+      HEROKU_REGISTRY_LOGIN: ${{ secrets.HEROKU_REGISTRY_LOGIN }}
+      HEROKU_REGISTRY_PASSWORD: ${{ secrets.HEROKU_REGISTRY_PASSWORD }}
+      HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
+      NEXT_PUBLIC_FIPE_API_URL: ${{ secrets.NEXT_PUBLIC_FIPE_API_URL }}
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Log to Container Registry
+      run: docker login registry.heroku.com -u $HEROKU_REGISTRY_LOGIN -p $HEROKU_REGISTRY_PASSWORD
+    - name: Build Image
+      run: docker build -t fipe-table-test . --build-arg NEXT_PUBLIC_FIPE_API_URL=$NEXT_PUBLIC_FIPE_API_URL
+    - name: Tag Image
+      run: docker tag fipe-table-test registry.heroku.com/fipe-table-test/web
+    - name: Push To Registry
+      run: docker push registry.heroku.com/fipe-table-test/web
+    - name: Release Image
+      run: |
+        image_id=$(docker inspect fipe-table-test --format={{.Id}})
+        curl --netrc -X PATCH https://api.heroku.com/apps/fipe-table-test/formation \
+          -d '{"updates": [{"type": "web","docker_image": "'"${image_id}"'"}]}' \
+          -H "Content-Type: application/json" \
+          -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
+          -H 'Authorization: Bearer '"$HEROKU_AUTH_TOKEN"''

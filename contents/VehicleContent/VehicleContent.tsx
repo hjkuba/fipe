@@ -8,6 +8,10 @@ import { selectCurrentVehicle } from '@/redux/selectors';
 
 import type { ThemeType } from 'grommet';
 
+const Main = styled.main`
+  padding: 16px;
+`;
+
 const Box = styled.div`
   border-bottom: 2px solid
     ${({ theme }: { theme: ThemeType }) => theme.global?.colors?.brand};
@@ -31,7 +35,7 @@ function VehicleContent() {
   const theme = useContext<ThemeType>(ThemeContext);
 
   return (
-    <main>
+    <Main>
       <LinkWrapper>
         <Link href="/">
           <Anchor color={theme.global?.colors?.brand}>Voltar</Anchor>
@@ -53,7 +57,7 @@ function VehicleContent() {
         </Box>
       ) : null}
       <Price>{vehicle?.Valor}</Price>
-    </main>
+    </Main>
   );
 }
 

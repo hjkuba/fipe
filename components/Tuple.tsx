@@ -6,6 +6,7 @@ import type { ThemeType } from 'grommet';
 const ItemContainer = styled.div`
   display: flex;
   margin-bottom: 12px;
+  font-size: 1rem;
 `;
 
 const Label = styled.span`
