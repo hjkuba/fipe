@@ -7,7 +7,16 @@ import { Marca } from '@/types';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-bottom: 24px;
+`;
+
+const Label = styled.span`
+  font-weight: light;
+  text-transform: uppercase;
+  color: #00b0aa;
+  margin-bottom: 8px;
 `;
 
 function BrandSelector() {
@@ -21,8 +30,10 @@ function BrandSelector() {
 
   return (
     <Container>
+      <Label>Marca</Label>
       <Select
-        placeholder="Selecione uma marca"
+        focusIndicator={false}
+        dropHeight="small"
         disabled={brands.length === 0}
         options={brands}
         value={selectedBrand}

@@ -36,4 +36,28 @@ export function selectEnableSearch(state: State) {
   );
 }
 
+export function selectIsModelLoading(state: State) {
+  return state.isModelLoading;
+}
+
+export function selectIsYearLoading(state: State) {
+  return state.isYearLoading;
+}
+
+export function selectBrandFetchHasError(state: State) {
+  return state.brandFetchHasError;
+}
+
+export function selectModelFetchFailed(state: State) {
+  return state.modelFetchFailed;
+}
+
+export function selectYearFetchFailed(state: State) {
+  return state.yearFetchFailed;
+}
+
+export function selectVehicleFetchFailed(state: State) {
+  return state.vehicleFetchFailed;
+}
+
 export default selectBrands;

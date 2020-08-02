@@ -12,7 +12,7 @@ import { Button } from 'grommet';
 
 import { BrandSelector, ModelSelector, YearSelector } from './components';
 
-const Box = styled.div`
+const Box = styled.main`
   display: flex;
   flex-direction: column;
   padding: 16px;

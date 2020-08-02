@@ -1,13 +1,33 @@
 import React from 'react';
-import wrapper from '@/redux/store';
 import { Grommet } from 'grommet';
-import type { AppProps } from 'next/app';
+import { createGlobalStyle } from 'styled-components';
 import MainLayout from '@/layouts/MainLayout';
-import 'styles/globals.css';
+import wrapper from '@/redux/store';
+import grommetTheme from '@/themes/grommet';
+
+import type { AppProps } from 'next/app';
+
+const GlobalStyle = createGlobalStyle`
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+`;
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <Grommet theme={{ global: { font: { family: 'Poppins' } } }}>
+    <Grommet theme={grommetTheme}>
+      <GlobalStyle />
       <MainLayout>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
