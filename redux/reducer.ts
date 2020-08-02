@@ -1,32 +1,33 @@
 import { HYDRATE } from 'next-redux-wrapper';
+
 import type { AnyAction } from 'redux';
 import type { Marca, Modelo, Ano, Automovel } from '@/types';
 
 import { ActionType } from './actions';
 
 export interface State {
-  marcas: Marca[];
-  modelos: Modelo[];
-  anos: Ano[];
-  marcaSelecionada?: Marca;
-  modeloSelecionado?: Modelo;
-  anoSelecionado?: Ano;
-  automovel?: Automovel;
-  isModelLoading: boolean;
-  isYearLoading: boolean;
-  brandFetchHasError: boolean;
+  brands: Marca[];
+  models: Modelo[];
+  years: Ano[];
+  modelFetching: boolean;
+  yearFetching: boolean;
+  brandFetchFailed: boolean;
   modelFetchFailed: boolean;
   yearFetchFailed: boolean;
   vehicleFetchFailed: boolean;
+  selectedBrand?: Marca;
+  selectedModel?: Modelo;
+  selectedYear?: Ano;
+  vehicle?: Automovel;
 }
 
 const initialState: State = {
-  marcas: [],
-  modelos: [],
-  anos: [],
-  isModelLoading: false,
-  isYearLoading: false,
-  brandFetchHasError: false,
+  brands: [],
+  models: [],
+  years: [],
+  modelFetching: false,
+  yearFetching: false,
+  brandFetchFailed: false,
   modelFetchFailed: false,
   yearFetchFailed: false,
   vehicleFetchFailed: false,
@@ -37,44 +38,44 @@ function reducer(state: State = initialState, action: AnyAction): State {
     case HYDRATE:
       return { ...state, ...action.payload };
     case ActionType.BRAND_FETCH_REQUESTED:
-      return { ...state, modelos: [], anos: [] };
+      return { ...state, models: [], years: [] };
     case ActionType.BRAND_FETCH_SUCCEEDED:
-      return { ...state, marcas: action.payload };
+      return { ...state, brands: action.payload };
     case ActionType.BRAND_FETCH_FAILED:
-      return { ...state, brandFetchHasError: true };
+      return { ...state, brandFetchFailed: true };
     case ActionType.BRAND_SELECTED: {
-      const { modeloSelecionado, anoSelecionado, ...newState } = state;
+      const { selectedModel, selectedYear, ...newState } = state;
       return {
         ...newState,
-        marcaSelecionada: action.payload,
-        modelos: [],
-        anos: [],
-        isModelLoading: true,
+        selectedBrand: action.payload,
+        models: [],
+        years: [],
+        modelFetching: true,
         modelFetchFailed: false,
       };
     }
     case ActionType.MODEL_FETCH_SUCCEEDED:
-      return { ...state, modelos: action.payload, isModelLoading: false };
+      return { ...state, models: action.payload, modelFetching: false };
     case ActionType.MODEL_FETCH_FAILED:
-      return { ...state, modelFetchFailed: true, isModelLoading: false };
+      return { ...state, modelFetchFailed: true, modelFetching: false };
     case ActionType.MODEL_SELECTED: {
-      const { anoSelecionado, ...newState } = state;
+      const { selectedYear, ...newState } = state;
       return {
         ...newState,
-        modeloSelecionado: action.payload,
-        anos: [],
-        isYearLoading: true,
+        selectedModel: action.payload,
+        years: [],
+        yearFetching: true,
         yearFetchFailed: false,
       };
     }
     case ActionType.YEAR_SELECTED:
-      return { ...state, anoSelecionado: action.payload };
+      return { ...state, selectedYear: action.payload };
     case ActionType.YEAR_FETCH_SUCCEEDED:
-      return { ...state, anos: action.payload, isYearLoading: false };
+      return { ...state, years: action.payload, yearFetching: false };
     case ActionType.YEAR_FETCH_FAILED:
-      return { ...state, isYearLoading: false, yearFetchFailed: true };
+      return { ...state, yearFetching: false, yearFetchFailed: true };
     case ActionType.VEHICLE_INFO_FETCH_SUCCEEDED:
-      return { ...state, automovel: action.payload };
+      return { ...state, vehicle: action.payload };
     case ActionType.VEHICLE_INFO_FETCH_FAILED:
       return { ...state, vehicleFetchFailed: true };
     default:

@@ -1,18 +1,19 @@
 import { takeLatest, put, all, select } from 'redux-saga/effects';
-import type { AnyAction } from 'redux';
 import {
   ActionType,
   brandFetchSucceeded,
   brandFetchFailed,
   modelFetchSucceeded,
   modelFetchFailed,
-  yearFetchFailed,
   yearFetchSucceeded,
+  yearFetchFailed,
   vehicleInfoFetchSucceeded,
   vehicleInfoFetchFailed,
 } from '@/redux/actions';
 import { selectCurrentBrand } from '@/redux/selectors';
 import * as FipeAPI from '@/services/FipeAPI';
+
+import type { AnyAction } from 'redux';
 
 // FETCH_BRANDS
 function* fetchBrands() {
@@ -27,7 +28,7 @@ function* fetchBrands() {
 // FETCH_MODELS
 function* fetchModels(action: AnyAction) {
   try {
-    const models = yield FipeAPI.fetchModels(action.payload);
+    const models = yield FipeAPI.fetchModels(action.payload.codigo);
     yield put(modelFetchSucceeded(models));
   } catch (err) {
     yield put(modelFetchFailed(err));
@@ -38,7 +39,7 @@ function* fetchModels(action: AnyAction) {
 function* fetchYears(action: AnyAction) {
   try {
     const brand = yield select(selectCurrentBrand);
-    const years = yield FipeAPI.fetchYears(brand, action.payload);
+    const years = yield FipeAPI.fetchYears(brand.codigo, action.payload.codigo);
     yield put(yearFetchSucceeded(years));
   } catch (err) {
     yield put(yearFetchFailed(err));

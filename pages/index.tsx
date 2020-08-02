@@ -1,17 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import HomeContent from '@/contents/HomeContent';
-import { useSelector } from 'react-redux';
-import wrapper from '@/redux/store';
 import { brandFetchRequested } from '@/redux/actions';
+import { selectBrandFetchFailed } from '@/redux/selectors';
+import wrapper from '@/redux/store';
+
 import type { SagaStore } from '@/redux/store';
-import { selectBrandFetchHasError } from '@/redux/selectors';
+
 import Error from './_error';
 
 function HomePage() {
-  const brandFetchHasError = useSelector(selectBrandFetchHasError);
+  const brandFetchFailed = useSelector(selectBrandFetchFailed);
 
-  if (brandFetchHasError) {
+  if (brandFetchFailed) {
     return <Error statusCode={500} />;
   }
 

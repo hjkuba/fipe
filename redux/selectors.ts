@@ -1,51 +1,47 @@
 import type { State } from '@/redux/reducer';
 
 export function selectBrands(state: State) {
-  return state.marcas;
+  return state.brands;
 }
 
 export function selectModels(state: State) {
-  return state.modelos;
+  return state.models;
 }
 
 export function selectYears(state: State) {
-  return state.anos;
+  return state.years;
 }
 
 export function selectCurrentBrand(state: State) {
-  return state.marcaSelecionada;
+  return state.selectedBrand;
 }
 
 export function selectCurrentModel(state: State) {
-  return state.modeloSelecionado;
+  return state.selectedModel;
 }
 
 export function selectCurrentYear(state: State) {
-  return state.anoSelecionado;
+  return state.selectedYear;
 }
 
 export function selectCurrentVehicle(state: State) {
-  return state.automovel;
+  return state.vehicle;
 }
 
 export function selectEnableSearch(state: State) {
-  return !!(
-    state.marcaSelecionada &&
-    state.modeloSelecionado &&
-    state.anoSelecionado
-  );
+  return !!(state.selectedBrand && state.selectedModel && state.selectedYear);
 }
 
-export function selectIsModelLoading(state: State) {
-  return state.isModelLoading;
+export function selectModelFetching(state: State) {
+  return state.modelFetching;
 }
 
-export function selectIsYearLoading(state: State) {
-  return state.isYearLoading;
+export function selectYearFetching(state: State) {
+  return state.yearFetching;
 }
 
-export function selectBrandFetchHasError(state: State) {
-  return state.brandFetchHasError;
+export function selectBrandFetchFailed(state: State) {
+  return state.brandFetchFailed;
 }
 
 export function selectModelFetchFailed(state: State) {

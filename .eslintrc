@@ -18,6 +18,7 @@
         "singleQuote": true,
         "trailingComma": "all"
       }
-    ]
+    ],
+    "react/require-default-props": "off"
   }
 }

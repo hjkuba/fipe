@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import styled from 'styled-components';
 import { Header } from 'grommet';
+import styled from 'styled-components';
 
 interface MainLayoutProps {
   children: ReactNode;

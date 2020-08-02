@@ -1,11 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import VehicleContent from '@/contents/VehicleContent';
-import wrapper from '@/redux/store';
-import { useSelector } from 'react-redux';
 import { vehicleInfoFetchRequested } from '@/redux/actions';
-import type { SagaStore } from '@/redux/store';
 import { selectVehicleFetchFailed } from '@/redux/selectors';
+import wrapper from '@/redux/store';
+
+import type { SagaStore } from '@/redux/store';
+
 import Error from './_error';
 
 function VehiclePage() {
