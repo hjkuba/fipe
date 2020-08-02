@@ -1,31 +1,35 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectBrands } from '@/redux/selectors';
+import { selectBrands, selectCurrentBrand } from '@/redux/selectors';
 import { brandSelected } from '@/redux/actions';
+import { Select } from 'grommet';
+import { Marca } from '@/types';
+import styled from 'styled-components';
 
-import type { ChangeEvent } from 'react';
+const Container = styled.div`
+  margin-bottom: 24px;
+`;
 
 function BrandSelector() {
   const dispatch = useDispatch();
-  const marcas = useSelector(selectBrands);
+  const brands = useSelector(selectBrands);
+  const selectedBrand = useSelector(selectCurrentBrand);
 
-  function handleChange(event: ChangeEvent<HTMLSelectElement>) {
-    const selectedBrand = marcas.find(
-      (marca) => marca.codigo === event.target.value,
-    );
-    if (selectedBrand) dispatch(brandSelected(selectedBrand));
+  function handleChange({ option }: { option: Marca }) {
+    dispatch(brandSelected(option));
   }
 
   return (
-    <>
-      <select onChange={handleChange}>
-        {marcas.map((marca) => (
-          <option key={marca.codigo} value={marca.codigo}>
-            {marca.nome}
-          </option>
-        ))}
-      </select>
-    </>
+    <Container>
+      <Select
+        placeholder="Selecione uma marca"
+        disabled={brands.length === 0}
+        options={brands}
+        value={selectedBrand}
+        labelKey="nome"
+        onChange={handleChange}
+      />
+    </Container>
   );
 }
 

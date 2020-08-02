@@ -1,29 +1,35 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectYears } from '@/redux/selectors';
+import { selectYears, selectCurrentYear } from '@/redux/selectors';
 import { yearSelected } from '@/redux/actions';
+import { Select } from 'grommet';
+import { Ano } from '@/types';
+import styled from 'styled-components';
 
-import type { ChangeEvent } from 'react';
+const Container = styled.div`
+  margin-bottom: 24px;
+`;
 
 function YearSelector() {
   const dispatch = useDispatch();
-  const anos = useSelector(selectYears);
+  const years = useSelector(selectYears);
+  const selectedYear = useSelector(selectCurrentYear);
 
-  function handleChange(event: ChangeEvent<HTMLSelectElement>) {
-    const selectedYear = anos.find((ano) => ano.codigo === event.target.value);
-    if (selectedYear) dispatch(yearSelected(selectedYear));
+  function handleChange({ option }: { option: Ano }) {
+    dispatch(yearSelected(option));
   }
 
   return (
-    <>
-      <select onChange={handleChange}>
-        {anos.map((ano) => (
-          <option key={ano.codigo} value={ano.codigo}>
-            {ano.nome}
-          </option>
-        ))}
-      </select>
-    </>
+    <Container>
+      <Select
+        placeholder="Selecione um ano"
+        disabled={years.length === 0}
+        options={years}
+        value={selectedYear}
+        labelKey="nome"
+        onChange={handleChange}
+      />
+    </Container>
   );
 }
 

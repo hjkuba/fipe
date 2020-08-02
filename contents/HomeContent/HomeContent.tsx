@@ -7,8 +7,16 @@ import {
   selectCurrentModel,
   selectCurrentYear,
 } from '@/redux/selectors';
+import styled from 'styled-components';
+import { Button } from 'grommet';
 
 import { BrandSelector, ModelSelector, YearSelector } from './components';
+
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+`;
 
 function HomeContent() {
   const enableSearch = useSelector(selectEnableSearch);
@@ -27,14 +35,18 @@ function HomeContent() {
   }
 
   return (
-    <>
+    <Box>
       <BrandSelector />
       <ModelSelector />
       <YearSelector />
-      <button disabled={!enableSearch} type="button" onClick={handleSearch}>
-        Buscar
-      </button>
-    </>
+      <Button
+        color="#00b0aa"
+        primary
+        onClick={handleSearch}
+        label="Buscar"
+        disabled={!enableSearch}
+      />
+    </Box>
   );
 }
 

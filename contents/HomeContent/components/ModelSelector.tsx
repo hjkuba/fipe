@@ -1,31 +1,35 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectModels } from '@/redux/selectors';
+import { selectModels, selectCurrentModel } from '@/redux/selectors';
 import { modelSelected } from '@/redux/actions';
+import { Select } from 'grommet';
+import { Modelo } from '@/types';
+import styled from 'styled-components';
 
-import type { ChangeEvent } from 'react';
+const Container = styled.div`
+  margin-bottom: 24px;
+`;
 
 function ModelSelector() {
   const dispatch = useDispatch();
-  const modelos = useSelector(selectModels);
+  const models = useSelector(selectModels);
+  const selectedModel = useSelector(selectCurrentModel);
 
-  function handleChange(event: ChangeEvent<HTMLSelectElement>) {
-    const selectedModel = modelos.find(
-      (modelo) => modelo.codigo === Number(event.target.value),
-    );
-    if (selectedModel) dispatch(modelSelected(selectedModel));
+  function handleChange({ option }: { option: Modelo }) {
+    dispatch(modelSelected(option));
   }
 
   return (
-    <>
-      <select onChange={handleChange}>
-        {modelos.map((modelo) => (
-          <option key={modelo.codigo} value={modelo.codigo}>
-            {modelo.nome}
-          </option>
-        ))}
-      </select>
-    </>
+    <Container>
+      <Select
+        placeholder="Selecione um modelo"
+        disabled={models.length === 0}
+        options={models}
+        value={selectedModel}
+        labelKey="nome"
+        onChange={handleChange}
+      />
+    </Container>
   );
 }
 
