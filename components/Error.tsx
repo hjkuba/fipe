@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import type { ReactElement } from 'react';
+import type { ThemeType } from 'grommet';
 
 const Container = styled.main`
   display: flex;
@@ -11,15 +12,16 @@ const Container = styled.main`
 `;
 
 const StatusCodeWrapper = styled.div`
-  border-radius: 50%;
-  background-color: #00b0aa;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 24px;
   height: 100px;
   width: 100px;
+  border-radius: 50%;
+  background-color: ${({ theme }: { theme: ThemeType }) =>
+    theme.global?.colors?.brand};
   color: white;
-  margin-bottom: 24px;
 `;
 
 const StatusCode = styled.h1`
@@ -28,8 +30,8 @@ const StatusCode = styled.h1`
 
 const Message = styled.p`
   margin: 0;
-  color: #00b0aa;
   text-align: center;
+  color: ${({ theme }: { theme: ThemeType }) => theme.global?.colors?.brand};
 `;
 
 interface ErrorPageProps {

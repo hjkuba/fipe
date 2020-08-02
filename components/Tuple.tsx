@@ -1,17 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import type { ThemeType } from 'grommet';
+
 const ItemContainer = styled.div`
   display: flex;
   margin-bottom: 12px;
 `;
 
 const Label = styled.span`
-  color: #00b0aa;
-  text-transform: uppercase;
   padding-right: 12px;
   margin-right: 12px;
-  border-right: 2px solid #00b0aa;
+  border-right: 2px solid
+    ${({ theme }: { theme: ThemeType }) => theme.global?.colors?.brand};
+  text-transform: uppercase;
+  color: ${({ theme }: { theme: ThemeType }) => theme.global?.colors?.brand};
 `;
 
 interface TupleProps {

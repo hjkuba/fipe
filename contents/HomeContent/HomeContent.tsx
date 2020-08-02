@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'grommet';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import {
   selectEnableSearch,
   selectCurrentBrand,
   selectCurrentModel,
   selectCurrentYear,
 } from '@/redux/selectors';
+
+import type { ThemeType } from 'grommet';
 
 import { BrandSelector, ModelSelector, YearSelector } from './components';
 
@@ -24,6 +26,7 @@ function HomeContent() {
   const currentModel = useSelector(selectCurrentModel);
   const currentYear = useSelector(selectCurrentYear);
   const router = useRouter();
+  const theme = useContext<ThemeType>(ThemeContext);
 
   function handleSearch() {
     const query = {
@@ -40,7 +43,7 @@ function HomeContent() {
       <ModelSelector />
       <YearSelector />
       <Button
-        color="#00b0aa"
+        color={theme.global?.colors?.brand}
         primary
         onClick={handleSearch}
         label="Buscar"

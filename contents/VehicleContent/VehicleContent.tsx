@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { Anchor } from 'grommet';
+import { Anchor, ThemeContext } from 'grommet';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Tuple } from '@/components';
 import { selectCurrentVehicle } from '@/redux/selectors';
 
-const Box = styled.main`
-  border-bottom: 2px solid #00b0aa;
+import type { ThemeType } from 'grommet';
+
+const Box = styled.div`
+  border-bottom: 2px solid
+    ${({ theme }: { theme: ThemeType }) => theme.global?.colors?.brand};
   margin-bottom: 16px;
 `;
 
@@ -20,17 +23,18 @@ const Price = styled.p`
   margin: 0;
   font-weight: bold;
   font-size: 1.8rem;
-  color: #00b0aa;
+  color: ${({ theme }: { theme: ThemeType }) => theme.global?.colors?.brand};
 `;
 
 function VehicleContent() {
   const vehicle = useSelector(selectCurrentVehicle);
+  const theme = useContext<ThemeType>(ThemeContext);
 
   return (
-    <div>
+    <main>
       <LinkWrapper>
         <Link href="/">
-          <Anchor color="#00b0aa">Voltar</Anchor>
+          <Anchor color={theme.global?.colors?.brand}>Voltar</Anchor>
         </Link>
       </LinkWrapper>
       {vehicle ? (
@@ -49,7 +53,7 @@ function VehicleContent() {
         </Box>
       ) : null}
       <Price>{vehicle?.Valor}</Price>
-    </div>
+    </main>
   );
 }
 

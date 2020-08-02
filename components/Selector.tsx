@@ -2,6 +2,8 @@ import React from 'react';
 import { Select } from 'grommet';
 import styled from 'styled-components';
 
+import type { ThemeType } from 'grommet';
+
 import LoadIcon from './icons/LoadIcon';
 
 const Container = styled.div`
@@ -11,19 +13,22 @@ const Container = styled.div`
 `;
 
 const Label = styled.span`
+  margin-bottom: 8px;
   font-weight: light;
   text-transform: uppercase;
-  color: #00b0aa;
-  margin-bottom: 8px;
+  color: ${({ theme }: { theme: ThemeType }) => theme.global?.colors?.brand};
 `;
 
 const SelectError = styled.div`
-  border: 1px solid #4300d24f;
-  color: #4300d24f;
-  font-weight: 600;
-  height: 51px;
-  border-radius: 4px;
   padding: 11px;
+  height: 51px;
+  border: 1px solid
+    ${({ theme }: { theme: ThemeType }) => theme.global?.colors?.['accent-1']};
+  border-radius: 4px;
+  font-weight: 600;
+  color: ${({ theme }: { theme: ThemeType }) =>
+    theme.global?.colors?.['accent-1']};
+  opacity: 0.5;
 `;
 
 interface SelectorProps<T> {
