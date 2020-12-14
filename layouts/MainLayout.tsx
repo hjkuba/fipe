@@ -24,8 +24,6 @@ const Title = styled.h1`
   font-size: 1.4rem;
   font-weight: 500;
   margin: 0 0 0 16px;
-  padding-left: 16px;
-  border-left: 2px solid #00b0aa;
   color: #00b0aa;
 `;
 
@@ -41,7 +39,6 @@ function MainLayout({ children }: MainLayoutProps) {
     <LayoutContainer>
       <Header justify="center">
         <TitleWrapper>
-          <img src="/images/mobiauto-logo.png" alt="logo" width={160} />
           <Title>
             Tabela <strong>FIPE</strong>
           </Title>
